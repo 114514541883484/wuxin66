@@ -1,0 +1,44 @@
+--狗蛋第一
+print("Welcome to Zeus")print("Welcome to Zeus")print("Welcome to Zeus")local OrionLib = loadstring(game:HttpGet("https://pastebin.com/raw/jrdKakD6"))()
+
+local CoreGui = game:GetService("StarterGui")CoreGui:SetCore("SendNotification", {    Title = "狗蛋",    Text = "耐心等待（反挂机已开启）",    Duration = 5, })print("反挂机开启")		local vu = game:GetService("VirtualUser")		game:GetService("Players").LocalPlayer.Idled:connect(function()		   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)		   wait(1)		   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)		end)
+local Window = OrionLib:MakeWindow({Name = "狗蛋制作的脚本", HidePremium = false, SaveConfig = false, IntroText = "注入器："..identifyexecutor(), ConfigFolder = "狗蛋脚本"})
+
+local Tab = Window:MakeTab({
+	Name = "力量传奇脚本",
+	Icon = "rbxassetid://7734068321",
+	PremiumOnly = false
+})
+
+Tab:AddButton({
+  Name = "中文汉化脚本",
+  Callback = function()
+
+
+
+ local part = Instance.new('Part', workspace)
+part.Size = Vector3.new(500, 20, 530.1)
+part.Position = Vector3.new(0, 1000, 133.15)
+part.CanCollide = true
+part.Anchored = true
+
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 15, 0)
+
+local a = true
+local rs = game:GetService("RunService").RenderStepped
+if a == true then
+while rs:wait() do
+for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+if v.ClassName == "Tool" and v.Name == "Weight" then
+v.Parent = game.Players.LocalPlayer.Character
+end
+end
+game:GetService("Players").LocalPlayer.muscleEvent:FireServer("rep")
+end
+end
+
+  	end
+})
+
+
+OrionLib:Init()
