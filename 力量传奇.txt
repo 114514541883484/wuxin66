@@ -11,7 +11,7 @@ local Tab = Window:MakeTab({
 })
 
 Tab:AddButton({
-  Name = "中文汉化脚本",
+  Name = "自动锻炼",
   Callback = function()
 
 
