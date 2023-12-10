@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()local Window = OrionLib:MakeWindow({Name = "狗蛋做的忍者传奇", HidePremium = false, SaveConfig = false, IntroText = "狗蛋脚本，启动", ConfigFolder = "1"})
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()local Window = OrionLib:MakeWindow({Name = "雾新制作的忍者传奇", HidePremium = false, SaveConfig = false, IntroText = "雾新脚本，启动", ConfigFolder = "1"})
 
 local Tab = Window:MakeTab({
 	Name = "忍者传奇",
