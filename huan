@@ -1,0 +1,203 @@
+local WindUI = loadstring(game:HttpGet("https://pastebin.com/raw/jeZa1X8D"))()
+
+local HttpService = game:GetService("HttpService")
+
+local folderPath = "WindUI"
+makefolder(folderPath)
+
+local function SaveFile(fileName, data)
+    local filePath = folderPath .. "/" .. fileName .. ".lua"
+    local jsonData = HttpService:JSONEncode(data)
+    writefile(filePath, jsonData)
+end
+
+local function LoadFile(fileName)
+    local filePath = folderPath .. "/" .. fileName .. ".lua"
+    if isfile(filePath) then
+        local jsonData = readfile(filePath)
+        return HttpService:JSONDecode(jsonData)
+    end
+end
+
+local function ListFiles()
+    local files = {}
+    for _, file in ipairs(listfiles(folderPath)) do
+        local fileName = file:match("([^/]+)%.lua$")
+        if fileName then
+            table.insert(files, fileName)
+        end
+    end
+    return files
+end
+
+local themeValues = {}
+for name, _ in pairs(WindUI:GetThemes()) do
+    table.insert(themeValues, name)
+end
+
+
+local Window = WindUI:CreateWindow({
+    Title = "力量传奇•切换宠物（喲）", 
+    Icon = "rbxassetid://101463971579691", --可以是rbx
+    Author = "ato", 
+    Folder = "喲制作", --保存文件夹
+    Size = UDim2.fromOffset(290, 340), 
+    KeySystem = { 
+        Key = "1", 
+        Note = "喲", 
+        URL = "喲", 
+        SaveKey = true,
+    }, 
+    Transparent = true,-- 透明度
+    Theme = "Dark",
+    SideBarWidth = 160, --左边滑动的宽度
+    HasOutline = true, --这是什么
+})
+
+--打开隐藏按钮
+Window:EditOpenButton({
+    Title = "打开",
+    Icon = "image-upscale",  
+    CornerRadius = UDim.new(0,10),
+    StrokeThickness = 3,
+    Color = ColorSequence.new(
+        Color3.fromHex("FF0F7B"), 
+        Color3.fromHex("F89B29")
+    )
+})
+
+local MainTab = Window:Tab({
+    Title = "切换宠物",
+    Icon = "notebook-tabs",
+})
+
+local needmus = 1000 + 5000 * game.Players.LocalPlayer.leaderstats.Rebirths.Value / 2 
+local fi = needmus / 0.85
+
+local ybfq = MainTab:Paragraph({
+    Title = "当前重生所需力量:",
+    Desc = "",
+    Image = "users",
+    ImageSize = 25,
+})
+spawn(function()
+while wait() do
+pcall(function()
+needmus = 1000 + 5000 * game.Players.LocalPlayer.leaderstats.Rebirths.Value / 2 
+ybfq:SetDesc(""..needmus)
+end)
+end
+end)
+
+
+local yj = MainTab:Paragraph({
+    Title = "预计会练到力量:",
+    Desc = "",
+    Image = "users",
+    ImageSize = 25,
+})
+spawn(function()
+while wait() do
+pcall(function()
+fi = needmus / 0.85
+yj:SetDesc(""..fi)
+end)
+end
+end)
+
+
+_G.autoqie1 = true
+
+function autoqie1()
+	while _G.autoqie1 == true do
+	wait(0.3)
+	for i, v in pairs(game.Players.LocalPlayer.petsFolder.Unique:GetChildren()) do
+	for i, h in pairs(game.Players.LocalPlayer.petsFolder.Unique:GetChildren()) do
+	if game.Players.LocalPlayer.leaderstats.Strength.Value >= needmus then
+	if v.Name == "Tribal Overlord" and h.Name == "Swift Samurai" then
+	local args = {
+    [1] = "unequipPet",
+    [2] = h
+}
+
+game:GetService("ReplicatedStorage").rEvents.equipPetEvent:FireServer(unpack(args))
+
+	local args = {
+    [1] = "equipPet",
+    [2] = v
+}
+
+game:GetService("ReplicatedStorage").rEvents.equipPetEvent:FireServer(unpack(args))
+end
+end
+end
+end
+	end
+end
+
+local Button = MainTab:Toggle({
+    Title = "自动切换宠物1",
+    Value = false,
+    Callback = function(state)
+        _G.autoqie1 = state
+            autoqie1()
+    end,
+})
+
+_G.autoqie2 = true
+
+function autoqie2()
+	while _G.autoqie2 == true do
+	wait(0.3)
+	for i, v in pairs(game.Players.LocalPlayer.petsFolder.Unique:GetChildren()) do
+	for i, h in pairs(game.Players.LocalPlayer.petsFolder.Unique:GetChildren()) do
+	if game.Players.LocalPlayer.leaderstats.Strength.Value < needmus then
+	if v.Name == "Tribal Overlord" and h.Name == "Swift Samurai" then
+	local args = {
+    [1] = "unequipPet",
+    [2] = v
+}
+
+game:GetService("ReplicatedStorage").rEvents.equipPetEvent:FireServer(unpack(args))
+
+	local args = {
+    [1] = "equipPet",
+    [2] = h
+}
+
+game:GetService("ReplicatedStorage").rEvents.equipPetEvent:FireServer(unpack(args))
+end
+end
+end
+end
+	end
+end
+
+local Button = MainTab:Toggle({
+    Title = "自动切换宠物2",
+    Value = false,
+    Callback = function(state)
+        _G.autoqie2 = state
+            autoqie2()
+    end,
+})
+
+_G.auto_reb = true
+
+function auto_reb()
+	while _G.auto_reb == true do
+	wait()
+		if game.Players.LocalPlayer.leaderstats.Strength.Value >= fi then
+	game:GetService("ReplicatedStorage").rEvents.rebirthRemote:InvokeServer("rebirthRequest")	
+	end
+	end
+end
+
+local Button = MainTab:Toggle({
+    Title = "自动重生",
+    Value = false,
+    Callback = function(state)
+        _G.auto_reb = state
+            auto_reb()
+    end,
+})
